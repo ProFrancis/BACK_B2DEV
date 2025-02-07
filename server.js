@@ -56,9 +56,9 @@ app.use("/api/user", routerUser)
 app.use("/api/article", routerArticle)
 app.use("/api/avis", routerAvis)
 
-// app.listen(PORT, () => {
-//   console.log(`LISTENING AT http://localhost:${PORT}`)
-// })
+ app.listen(PORT, () => {
+   console.log(`LISTENING AT http://localhost:${PORT}`)
+ })
 
 const uploadFolder = path.join(dirname, './uploads');
 
@@ -327,6 +327,8 @@ const deleteUser = async (req, res, next) => {
   try{
     const user = await Model.findById(req.params.id)
     if (!user) return res.status(404).json("User not found.")
+      console.log(user);
+      
     if (user._id.toString() !== req.user.id) return res.status(403).json("Accès refusé!.");
     user.isActive = false;
     await user.save();
